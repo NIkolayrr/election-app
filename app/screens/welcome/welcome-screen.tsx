@@ -7,7 +7,6 @@ import { color, spacing, typography } from "../../theme"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
-  backgroundColor: color.storybookDarkBg,
   paddingHorizontal: spacing[4],
   justifyContent: "center",
   alignItems: "center",
@@ -16,6 +15,7 @@ const CONTAINER: ViewStyle = {
 const TEXT: TextStyle = {
   color: color.palette.white,
   fontFamily: typography.primary,
+  fontSize: 20,
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const HEADER: TextStyle = {
@@ -79,7 +79,6 @@ const FOOTER_CONTENT: ViewStyle = {
 
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation()
-  const nextScreen = () => navigation.navigate("demo")
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
@@ -87,6 +86,11 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Text style={TEXT}>Гласувай електронно!</Text>
       </Screen>
+      <View style={FOOTER}>
+        <View style={FOOTER_CONTENT}>
+          <Button preset="primary" text="Вход" />
+        </View>
+      </View>
     </View>
   )
 })

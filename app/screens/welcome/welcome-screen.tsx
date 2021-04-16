@@ -86,11 +86,6 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Text style={TEXT}>Гласувай електронно!</Text>
       </Screen>
-      <View style={FOOTER}>
-        <View style={FOOTER_CONTENT}>
-          <Button preset="primary" text="Вход" />
-        </View>
-      </View>
     </View>
   )
 })

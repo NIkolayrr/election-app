@@ -46,6 +46,14 @@ const AVATAR_IMAGE: ImageStyle = {
   alignSelf: "center",
 }
 
+const USER_INFORMATION: ViewStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+}
+
 export const HomeScreen = observer(function HomeScreen() {
   const navigation = useNavigation()
   const currentUser = firebase.auth().currentUser
@@ -61,9 +69,13 @@ export const HomeScreen = observer(function HomeScreen() {
 
   const userInformation = (user: firebase.User) => {
     return (
-      <View>
+      <View style={USER_INFORMATION}>
         <Image source={{ uri: user.photoURL }} style={AVATAR_IMAGE} />
-        <Text>{user.displayName}</Text>
+        <View style={{ marginHorizontal: 10 }}>
+          <Text>{user.displayName}</Text>
+          <Text>{user.email}</Text>
+        </View>
+        <Button preset="primary" text="Sign Out" onPress={() => logOut()} />
       </View>
     )
   }
@@ -99,7 +111,6 @@ export const HomeScreen = observer(function HomeScreen() {
         <Text style={TEXT}>Home Screen</Text>
         {currentUser ? userInformation(currentUser) : null}
         {parties ? loadParties(parties) : null}
-        <Button preset="primary" text="Sign Out" onPress={() => logOut()} />
       </Screen>
     </View>
   )

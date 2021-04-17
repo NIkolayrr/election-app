@@ -27,7 +27,7 @@ import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 
 import firebase from "firebase"
-import firebaseConfig from "../app/config/firebase"
+import { firebaseConfig } from "../app/config/firebase"
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)

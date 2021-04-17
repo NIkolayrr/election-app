@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
+import * as Google from "expo-google-app-auth"
+import { googleConfig } from "../../config/firebase"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -79,6 +81,28 @@ const FOOTER_CONTENT: ViewStyle = {
 
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation()
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {}, [])
+
+  const googleSignIn = async () => {
+    try {
+      const result = await Google.logInAsync({
+        behavior: "web",
+        androidClientId: googleConfig.androidClientId,
+        iosClientId: googleConfig.iosClientId,
+        scopes: ["profile", "email"],
+      })
+
+      if (result.type === "success") {
+        return result.accessToken
+      } else {
+        return { cancelled: true }
+      }
+    } catch (e) {
+      return { error: true }
+    }
+  }
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
@@ -86,6 +110,11 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         <Text style={TEXT}>Гласувай електронно!</Text>
       </Screen>
+      <View style={FOOTER}>
+        <View style={FOOTER_CONTENT}>
+          <Button text="Sign in with Google" onPress={() => googleSignIn()} />
+        </View>
+      </View>
     </View>
   )
 })

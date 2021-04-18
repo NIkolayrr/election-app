@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
+import {
+  View,
+  Image,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
+  SafeAreaView,
+  ImageBackground,
+} from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
@@ -7,7 +15,7 @@ import { color, spacing, typography } from "../../theme"
 import * as Google from "expo-google-app-auth"
 import { googleConfig } from "../../config/firebase"
 import firebase from "firebase"
-import { ScrollView } from "react-native-gesture-handler"
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -51,7 +59,22 @@ const USER_INFORMATION: ViewStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  marginBottom: 20,
+  padding: spacing[2],
+}
+
+const LOGO: ImageStyle = {
+  flex: 1,
+  maxWidth: 50,
+  minWidth: 50,
+  justifyContent: "flex-start",
+}
+
+const PARTIE_CONTAINER: ViewStyle = {
+  borderWidth: 2,
+  borderColor: "red",
+  marginVertical: 10,
+  display: "flex",
+  flexDirection: "row",
 }
 
 export const HomeScreen = observer(function HomeScreen() {
@@ -72,8 +95,8 @@ export const HomeScreen = observer(function HomeScreen() {
       <View style={USER_INFORMATION}>
         <Image source={{ uri: user.photoURL }} style={AVATAR_IMAGE} />
         <View style={{ marginHorizontal: 10 }}>
-          <Text>{user.displayName}</Text>
-          <Text>{user.email}</Text>
+          <Text style={{ color: color.palette.orangeDarker }}>{user.displayName}</Text>
+          <Text style={{ color: color.palette.orangeDarker }}>{user.email}</Text>
         </View>
         <Button preset="primary" text="Sign Out" onPress={() => logOut()} />
       </View>
@@ -85,11 +108,18 @@ export const HomeScreen = observer(function HomeScreen() {
       <ScrollView>
         {Object.keys(data).map((el: any, index) => {
           return (
-            <View key={index}>
-              <Text>{el}</Text>
-              <Text>{data[el].slogan}</Text>
-              <Image source={{ uri: data[el].logo }} style={{ width: 50, minHeight: 20 }} />
-            </View>
+            <TouchableOpacity
+              key={index}
+              onPress={() => navigation.navigate("details", { data: data[el] })}
+            >
+              <View style={PARTIE_CONTAINER}>
+                <Image source={{ uri: data[el].logo }} resizeMode="contain" style={LOGO} />
+                <View>
+                  <Text>{data[el].name}</Text>
+                  <Text>{data[el].slogan}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           )
         })}
       </ScrollView>
@@ -107,9 +137,8 @@ export const HomeScreen = observer(function HomeScreen() {
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
+      {currentUser ? userInformation(currentUser) : null}
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-        <Text style={TEXT}>Home Screen</Text>
-        {currentUser ? userInformation(currentUser) : null}
         {parties ? loadParties(parties) : null}
       </Screen>
     </View>

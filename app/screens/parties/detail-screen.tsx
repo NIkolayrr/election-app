@@ -33,7 +33,10 @@ const webView = (url) => {
   return (
     <WebView
       originWhitelist={["*"]}
-      source={{ uri: url }}
+      source={{
+        uri: url,
+      }}
+      sharedCookiesEnabled={true}
       style={{ marginTop: 20, width: deviceWidth }}
     />
   )
@@ -47,8 +50,16 @@ export const DetailsScreen = observer(function DetailsScreen(props: any) {
   return (
     <View testID="DetailsScreen" style={FULL}>
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-        <Text style={TEXT}>Details</Text>
-        <View style={{ height: 400 }}>{data ? webView(data.manifest) : null}</View>
+        <Image
+          source={{ uri: data.logo }}
+          resizeMode="contain"
+          style={{ width: 100, height: 100 }}
+        />
+        <Text style={TEXT}>{data.name}</Text>
+        <Text style={TEXT}>{data.slogan}</Text>
+        <Text>Хора</Text>
+        <Text>Манифест</Text>
+        <View style={{ height: 400 }}>{webView(data.manifest)}</View>
       </Screen>
     </View>
   )

@@ -10,7 +10,7 @@ import {
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Button, Header, Screen, Text, Wallpaper } from "../../components"
+import { Button, Header, Screen, Text, VoteButton, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import * as Google from "expo-google-app-auth"
 import { googleConfig } from "../../config/firebase"
@@ -23,7 +23,7 @@ const CONTAINER: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   flex: 1,
-  backgroundColor: "purple",
+  backgroundColor: color.primaryDarker,
 }
 const TEXT: TextStyle = {
   color: color.palette.orange,
@@ -59,22 +59,22 @@ const USER_INFORMATION: ViewStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: spacing[2],
+  marginHorizontal: spacing[4],
 }
 
 const LOGO: ImageStyle = {
   flex: 1,
   maxWidth: 50,
   minWidth: 50,
+  marginRight: spacing[4],
   justifyContent: "flex-start",
 }
 
 const PARTIE_CONTAINER: ViewStyle = {
-  borderWidth: 2,
-  borderColor: "red",
   marginVertical: 10,
   display: "flex",
   flexDirection: "row",
+  paddingVertical: spacing[2],
 }
 
 export const HomeScreen = observer(function HomeScreen() {
@@ -137,10 +137,13 @@ export const HomeScreen = observer(function HomeScreen() {
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
-      {currentUser ? userInformation(currentUser) : null}
+      <SafeAreaView style={{ height: 70 }}>
+        {currentUser ? userInformation(currentUser) : null}
+      </SafeAreaView>
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         {parties ? loadParties(parties) : null}
       </Screen>
+      <VoteButton />
     </View>
   )
 })

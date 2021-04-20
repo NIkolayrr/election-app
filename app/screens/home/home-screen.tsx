@@ -25,42 +25,6 @@ const CONTAINER: ViewStyle = {
   flex: 1,
   backgroundColor: color.primaryDarker,
 }
-const TEXT: TextStyle = {
-  color: color.palette.orange,
-  fontFamily: typography.primary,
-  fontSize: 20,
-}
-const BOLD: TextStyle = { fontWeight: "bold" }
-const HEADER: TextStyle = {
-  paddingTop: spacing[3],
-  paddingBottom: spacing[4] + spacing[1],
-  paddingHorizontal: 0,
-}
-const HEADER_TITLE: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 12,
-  lineHeight: 15,
-  textAlign: "center",
-  letterSpacing: 1.5,
-}
-
-const AVATAR_IMAGE: ImageStyle = {
-  width: 50,
-  height: 50,
-  borderRadius: 100,
-  borderWidth: 2,
-  borderColor: color.primary,
-  alignSelf: "center",
-}
-
-const USER_INFORMATION: ViewStyle = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginHorizontal: spacing[4],
-}
 
 const LOGO: ImageStyle = {
   flex: 1,
@@ -79,7 +43,6 @@ const PARTIE_CONTAINER: ViewStyle = {
 
 export const HomeScreen = observer(function HomeScreen() {
   const navigation = useNavigation()
-  const currentUser = firebase.auth().currentUser
   const [parties, setParties] = useState(undefined)
 
   useEffect(() => {
@@ -89,19 +52,6 @@ export const HomeScreen = observer(function HomeScreen() {
       setParties(partiesData)
     })
   }, [])
-
-  const userInformation = (user: firebase.User) => {
-    return (
-      <View style={USER_INFORMATION}>
-        <Image source={{ uri: user.photoURL }} style={AVATAR_IMAGE} />
-        <View style={{ marginHorizontal: 10 }}>
-          <Text style={{ color: color.palette.orangeDarker }}>{user.displayName}</Text>
-          <Text style={{ color: color.palette.orangeDarker }}>{user.email}</Text>
-        </View>
-        <Button preset="primary" text="Sign Out" onPress={() => logOut()} />
-      </View>
-    )
-  }
 
   const loadParties = (data) => {
     return (
@@ -137,9 +87,6 @@ export const HomeScreen = observer(function HomeScreen() {
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
-      <SafeAreaView style={{ height: 70 }}>
-        {currentUser ? userInformation(currentUser) : null}
-      </SafeAreaView>
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         {parties ? loadParties(parties) : null}
       </Screen>

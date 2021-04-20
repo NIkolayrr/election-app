@@ -7,6 +7,9 @@
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import { DetailsScreen, HomeScreen, WelcomeScreen } from "../screens"
+import { CustomHeader } from "../components"
+import firebase from "firebase"
+import { color } from "../theme"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -30,15 +33,20 @@ export type PrimaryParamList = {
 const Stack = createStackNavigator<PrimaryParamList>()
 
 export function MainNavigator() {
+  const loggedInUser = firebase.auth().currentUser
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        headerTitle: (props) =>
+          loggedInUser ? <CustomHeader user={loggedInUser} {...props} /> : null,
+        headerBackTitleVisible: false,
+        headerTintColor: color.primary,
       }}
       initialRouteName="welcome"
     >
       <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen name="home" component={HomeScreen} />
+      <Stack.Screen options={{ headerShown: true }} name="home" component={HomeScreen} />
       <Stack.Screen options={{ headerShown: true }} name="details" component={DetailsScreen} />
     </Stack.Navigator>
   )

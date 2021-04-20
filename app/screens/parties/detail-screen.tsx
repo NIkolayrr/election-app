@@ -17,8 +17,6 @@ import { WebView } from "react-native-webview"
 const FULL: ViewStyle = { flex: 1, backgroundColor: "purple" }
 const CONTAINER: ViewStyle = {
   paddingHorizontal: spacing[4],
-  justifyContent: "center",
-  alignItems: "center",
   flex: 1,
 }
 const TEXT: TextStyle = {
@@ -47,6 +45,21 @@ export const DetailsScreen = observer(function DetailsScreen(props: any) {
   const navigation = useNavigation()
   const data = props.route.params.data
   console.log("the data", data.manifest)
+
+  const peopleList = (people) => {
+    return Object.keys(people).map((key, index) => {
+      return (
+        <View key={index}>
+          <Text>{people[key].name}</Text>
+          <Image
+            source={{ uri: people[key].photo }}
+            resizeMode="contain"
+            style={{ width: 50, height: 50 }}
+          />
+        </View>
+      )
+    })
+  }
   return (
     <View testID="DetailsScreen" style={FULL}>
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
@@ -58,6 +71,7 @@ export const DetailsScreen = observer(function DetailsScreen(props: any) {
         <Text style={TEXT}>{data.name}</Text>
         <Text style={TEXT}>{data.slogan}</Text>
         <Text>Хора</Text>
+        {data.people ? peopleList(data.people) : null}
         <Text>Манифест</Text>
         <View style={{ height: 400 }}>{webView(data.manifest)}</View>
       </Screen>

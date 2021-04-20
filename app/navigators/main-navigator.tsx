@@ -46,7 +46,11 @@ export function MainNavigator() {
       initialRouteName="welcome"
     >
       <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen options={{ headerShown: true }} name="home" component={HomeScreen} />
+      <Stack.Screen
+        options={{ headerShown: true, headerLeft: null }}
+        name="home"
+        component={HomeScreen}
+      />
       <Stack.Screen options={{ headerShown: true }} name="details" component={DetailsScreen} />
     </Stack.Navigator>
   )

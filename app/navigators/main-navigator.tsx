@@ -42,6 +42,9 @@ export function MainNavigator() {
           loggedInUser ? <CustomHeader user={loggedInUser} {...props} /> : null,
         headerBackTitleVisible: false,
         headerTintColor: color.primary,
+        headerStyle: {
+          height: 120,
+        },
       }}
       initialRouteName="welcome"
     >

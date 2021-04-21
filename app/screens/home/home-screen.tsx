@@ -35,10 +35,9 @@ const LOGO: ImageStyle = {
 }
 
 const PARTIE_CONTAINER: ViewStyle = {
-  marginVertical: 10,
   display: "flex",
   flexDirection: "row",
-  paddingVertical: spacing[2],
+  paddingVertical: spacing[4],
 }
 
 export const HomeScreen = observer(function HomeScreen() {
@@ -55,7 +54,7 @@ export const HomeScreen = observer(function HomeScreen() {
 
   const loadParties = (data) => {
     return (
-      <ScrollView>
+      <ScrollView style={FULL}>
         {Object.keys(data).map((el: any, index) => {
           return (
             <TouchableOpacity

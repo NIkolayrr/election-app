@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, ImageStyle, Text, View, ViewStyle } from "react-native"
+import { Dimensions, Image, ImageStyle, PlatformColor, Text, View, ViewStyle } from "react-native"
 import { Button } from "../button/button"
 import firebase from "firebase"
 import { color, spacing } from "../../theme"
@@ -8,8 +8,9 @@ import { useNavigation } from "@react-navigation/native"
 const USER_INFORMATION: ViewStyle = {
   display: "flex",
   flexDirection: "row",
-  justifyContent: "space-between",
   alignItems: "center",
+  justifyContent: "center",
+  width: Dimensions.get("screen").width - 80,
 }
 
 const AVATAR_IMAGE: ImageStyle = {
@@ -19,6 +20,7 @@ const AVATAR_IMAGE: ImageStyle = {
   borderWidth: 2,
   borderColor: color.primary,
   alignSelf: "center",
+  marginRight: spacing[4],
 }
 
 export function CustomHeader(props: { user: firebase.User }) {
@@ -34,10 +36,16 @@ export function CustomHeader(props: { user: firebase.User }) {
   }
   return (
     <View style={USER_INFORMATION}>
-      <Image source={{ uri: props.user.photoURL }} style={AVATAR_IMAGE} />
-      <View>
+      <View
+        style={{
+          flexGrow: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image source={{ uri: props.user.photoURL }} style={AVATAR_IMAGE} />
         <Text style={{ color: color.palette.orangeDarker }}>{props.user.displayName}</Text>
-        <Text style={{ color: color.palette.orangeDarker }}>{props.user.email}</Text>
       </View>
       <Button preset="primary" text="Sign Out" onPress={() => logOut()} />
     </View>

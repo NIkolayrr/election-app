@@ -1,5 +1,7 @@
+import { useNavigation } from "@react-navigation/native"
 import * as React from "react"
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { color, spacing } from "../../theme"
 
 /**
@@ -8,6 +10,8 @@ import { color, spacing } from "../../theme"
  * This component is a HOC over the built-in React Native one.
  */
 export function VoteButton() {
+  const navigation = useNavigation()
+
   return (
     <SafeAreaView>
       <View
@@ -21,7 +25,9 @@ export function VoteButton() {
           paddingVertical: spacing[4],
         }}
       >
-        <Text>Гласувай</Text>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("vote")}>
+          <Text>Гласувай</Text>
+        </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>
   )

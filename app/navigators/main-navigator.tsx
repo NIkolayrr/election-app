@@ -6,7 +6,7 @@
  */
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
-import { DetailsScreen, HomeScreen, WelcomeScreen } from "../screens"
+import { DetailsScreen, HomeScreen, VoteScreen, WelcomeScreen } from "../screens"
 import { CustomHeader } from "../components"
 import firebase from "firebase"
 import { color } from "../theme"
@@ -27,6 +27,7 @@ export type PrimaryParamList = {
   welcome: undefined
   home: undefined
   details: undefined
+  vote: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -55,6 +56,7 @@ export function MainNavigator() {
         component={HomeScreen}
       />
       <Stack.Screen options={{ headerShown: true }} name="details" component={DetailsScreen} />
+      <Stack.Screen options={{ headerShown: true }} name="vote" component={VoteScreen} />
     </Stack.Navigator>
   )
 }

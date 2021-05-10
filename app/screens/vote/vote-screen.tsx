@@ -17,7 +17,7 @@ const CONTAINER: ViewStyle = {
 }
 const TEXT: TextStyle = {
   color: color.palette.white,
-  fontFamily: typography.primary,
+  fontFamily: typography.secondary,
   fontSize: 20,
 }
 

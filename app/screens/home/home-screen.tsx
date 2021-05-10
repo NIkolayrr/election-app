@@ -16,6 +16,7 @@ import * as Google from "expo-google-app-auth"
 import { googleConfig } from "../../config/firebase"
 import firebase from "firebase"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
+import { snapshot } from "@storybook/addon-storyshots"
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -43,6 +44,7 @@ const PARTIE_CONTAINER: ViewStyle = {
 export const HomeScreen = observer(function HomeScreen() {
   const navigation = useNavigation()
   const [parties, setParties] = useState(undefined)
+  const [user, setUser] = useState(undefined)
 
   useEffect(() => {
     const partiesRef = firebase.database().ref("parties")
@@ -50,6 +52,13 @@ export const HomeScreen = observer(function HomeScreen() {
       const partiesData = snapshot.val()
       setParties(partiesData)
     })
+
+    firebase
+      .database()
+      .ref("users")
+      .on("value", (snapshot) => {
+        setUser(snapshot.val()[firebase.auth().currentUser.uid])
+      })
   }, [])
 
   const loadParties = (data) => {
@@ -89,7 +98,7 @@ export const HomeScreen = observer(function HomeScreen() {
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         {parties ? loadParties(parties) : null}
       </Screen>
-      <VoteButton />
+      {user.voted.length < 0 ? null : <VoteButton />}
     </View>
   )
 })

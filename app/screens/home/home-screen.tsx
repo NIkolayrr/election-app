@@ -24,7 +24,6 @@ const CONTAINER: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   flex: 1,
-  backgroundColor: color.primaryDarker,
 }
 
 const LOGO: ImageStyle = {
@@ -51,13 +50,17 @@ export const HomeScreen = observer(function HomeScreen() {
     partiesRef.on("value", (snapshot) => {
       const partiesData = snapshot.val()
       setParties(partiesData)
+      console.log(snapshot.val())
     })
 
     firebase
       .database()
       .ref("users")
       .on("value", (snapshot) => {
-        setUser(snapshot.val()[firebase.auth().currentUser.uid])
+        const { currentUser } = firebase.auth()
+        if (currentUser) {
+          setUser(snapshot.val()[currentUser.uid])
+        }
       })
   }, [])
 
@@ -98,7 +101,7 @@ export const HomeScreen = observer(function HomeScreen() {
       <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
         {parties ? loadParties(parties) : null}
       </Screen>
-      {user.voted.length < 0 ? null : <VoteButton />}
+      {user && user.voted.length < 0 ? null : <VoteButton />}
     </View>
   )
 })

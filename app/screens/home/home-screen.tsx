@@ -40,6 +40,10 @@ const PARTIE_CONTAINER: ViewStyle = {
   paddingVertical: spacing[4],
 }
 
+const TEXT: TextStyle = {
+  color: color.palette.lightGrey,
+}
+
 export const HomeScreen = observer(function HomeScreen() {
   const navigation = useNavigation()
   const [parties, setParties] = useState(undefined)
@@ -76,8 +80,8 @@ export const HomeScreen = observer(function HomeScreen() {
               <View style={PARTIE_CONTAINER}>
                 <Image source={{ uri: data[el].logo }} resizeMode="contain" style={LOGO} />
                 <View>
-                  <Text>{data[el].name}</Text>
-                  <Text>{data[el].slogan}</Text>
+                  <Text style={TEXT}>{data[el].name}</Text>
+                  <Text style={TEXT}>{data[el].slogan}</Text>
                 </View>
               </View>
             </TouchableOpacity>

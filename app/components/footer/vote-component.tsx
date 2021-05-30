@@ -28,7 +28,6 @@ export function VoteButton() {
       >
         <TouchableWithoutFeedback onPress={() => navigation.navigate("vote")}>
           <Text>Гласувай</Text>
-          {/* <Privacy width={120} height={40} /> */}
         </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>

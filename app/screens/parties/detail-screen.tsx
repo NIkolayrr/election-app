@@ -14,13 +14,13 @@ import { Button, Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { WebView } from "react-native-webview"
 
-const FULL: ViewStyle = { flex: 1, backgroundColor: "purple" }
+const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   paddingHorizontal: spacing[4],
   flex: 1,
 }
 const TEXT: TextStyle = {
-  color: color.palette.white,
+  color: color.text,
   fontFamily: typography.primary,
   fontSize: 20,
 }
@@ -44,7 +44,6 @@ const webView = (url) => {
 export const DetailsScreen = observer(function DetailsScreen(props: any) {
   const navigation = useNavigation()
   const data = props.route.params.data
-  console.log("the data", data.manifest)
 
   const peopleList = (people) => {
     return Object.keys(people).map((key, index) => {

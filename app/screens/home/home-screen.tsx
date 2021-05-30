@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   View,
   Image,
@@ -7,6 +7,7 @@ import {
   ImageStyle,
   SafeAreaView,
   ImageBackground,
+  RefreshControl,
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
@@ -68,9 +69,23 @@ export const HomeScreen = observer(function HomeScreen() {
       })
   }, [])
 
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    wait(2000).then(() => setRefreshing(false))
+  }, [])
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout))
+  }
+
   const loadParties = (data) => {
     return (
-      <ScrollView style={FULL}>
+      <ScrollView
+        style={FULL}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         {Object.keys(data).map((el: any, index) => {
           return (
             <TouchableOpacity
